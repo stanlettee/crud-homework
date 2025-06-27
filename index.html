@@ -1,14 +1,26 @@
-<!DOCTYPE html><html lang=en><meta charset=UTF-8><meta name=viewport content="width=device-width, initial-scale=1.0"><title>CRUD Students</title><link rel=stylesheet href=/crud-homework/crud-homework.37f145e4.css><body>
+<!DOCTYPE html><html lang="en"><head>
 
-  <div class=container>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CRUD Students</title>
+
+  <link rel="stylesheet" href="/crud-homework.4d663569.css">
+
+</head>
+
+<body>
+
+  <div class="container">
 
     <h1>Список студентів</h1>
 
-    <button id=get-students-btn>Отримати студентів</button>
+    <button id="get-students-btn">Отримати студентів</button>
 
 
 
-    <table id=students-table>
+    <table id="students-table">
 
       <thead>
 
@@ -36,7 +48,7 @@
 
       <tbody>
 
-        
+        <!-- Динамічно заповнено -->
 
       </tbody>
 
@@ -46,29 +58,30 @@
 
     <h2>Додати нового студента</h2>
 
-    <form id=add-student-form>
+    <form id="add-student-form">
 
-      <label>Ім'я: <input id=name required></label>
+      <label>Ім'я: <input type="text" id="name" required=""></label>
 
-      <label>Вік: <input type=number id=age required></label>
+      <label>Вік: <input type="number" id="age" required=""></label>
 
-      <label>Курс: <input id=course required></label>
+      <label>Курс: <input type="text" id="course" required=""></label>
 
-      <label>Навички (через кому): <input id=skills required></label>
+      <label>Навички (через кому): <input type="text" id="skills" required=""></label>
 
-      <label>Email: <input type=email id=email required></label>
+      <label>Email: <input type="email" id="email" required=""></label>
 
-      <label>Записаний: <input type=checkbox id=isEnrolled></label>
+      <label>Записаний: <input type="checkbox" id="isEnrolled"></label>
 
-      <button>Додати студента</button>
+      <button type="submit">Додати студента</button>
 
     </form>
 
   </div>
 
-  <script src=/crud-homework/crud-homework.a008e89c.js></script>
+  <script src="/crud-homework.44983732.js"></script>
 
 
 
 
 
+<script src="/crud-homework.59712999.js"></script></body></html>
