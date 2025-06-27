@@ -15,5 +15,8 @@
   "license": "ISC",
   "devDependencies": {
     "parcel": "^2.15.4"
+  },
+  "dependencies": {
+    "gh-pages": "^6.3.0"
   }
 }
