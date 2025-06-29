@@ -94,6 +94,10 @@ button:hover {
 
 }
 
+.edit {
+  display: none;
+}
+
 
 
 form {
