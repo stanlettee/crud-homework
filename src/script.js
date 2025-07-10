@@ -1,124 +1,8 @@
-// // Функція для отримання всіх студентів
-
-async function getStudents () {
-  try {
-    return await fetch("http://localhost:3000/students")
-    .then((res) => res.json())
-  } catch (error) {
-    console.log(error)
-  }
-};
- 
-
-
-
-// // Функція для відображення студентів у таблиці
-
-function renderStudents(students) {
-    const objectChange = students
-    .map((object) => {
-    const newObject = `
-    <tr data-id="${object.id}">
-        <td>${object.id}</td>
-        <td class="name">${object.name}</td>
-        <td class="age">${object.age}</td>
-        <td class="course">${object.course}</td>
-        <td class="skills">${object.skills}</td>
-        <td class="email">${object.email}</td>
-        <td class="isEnrolled">${object.isEnrolled}</td>
-        <td>
-            <button style="margin-bottom: 5px" class="edit-button">Редагувати</button>
-            <button class="delete-button">Видалити</button>
-        </td>
-    </tr>
-    `;
-    return newObject;
-    })
-
-    .join("");
-    return objectChange;
-}
-
-
-
-// // Функція для додавання нового студента
-
-// function addStudent(student) {
-//     const options = {
-//     method: "POST",
-//     body: JSON.stringify(student),
-//     headers: {
-//     "Content-Type": "application/json; charset=UTF-8",
-//     },
-// };
-//    return fetch("http://localhost:3000/students", options)
-//   .then((res) => res.json())
-// }
-
-async function addStudent(student) {
-  try {
-    return await fetch("http://localhost:3000/students", {
-        method: "POST",
-        body: JSON.stringify(student),
-        headers: {
-        "Content-Type": "application/json; charset=UTF-8",
-        }
-    }).then((res) => res.json())
-  } catch (error) {
-    console.log(error)
-}
-}
-
-
-
-// // Функція для оновлення студента
-
-// function updateStudent(id, studentData) {
-//   return fetch(`http://localhost:3000/students/${id}`, {
-//     method: 'PATCH',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(studentData)
-//   }).then(res => res.json());
-// }
-
-async function updateStudent(id, studentData) {
-  try {
-    return await fetch(`http://localhost:3000/students${id}`, {
-        method: 'PUT',
-        headers: {
-        'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(studentData)
-    }).then((res) => res.json())
-  } catch (error) {
-    console.log(error)
-}
-}
-
-
-// // Функція для видалення студента
-
-// function deleteStudent(id) {
-//   return fetch(`http://localhost:3000/students/${id}`, {
-//     method: "DELETE",
-//   });
-// }
-
-async function deleteStudent(id){
-  try {
-    return await fetch(`http://localhost:3000/students/${id}`, {
-        method: "DELETE",
-    });
-  } catch (error) {
-    console.log(error)
-  }
-};
-
-
-// 1. Реалізуйте функцію getStudents для 
-// отримання списку всіх студентів (HTTP GET /students) getStudents
+import { default as renderStudents } from "./js/render"
+import { default as getStudents } from "./api/getMethod"
+import { default as addStudent } from "./api/postMethod"
+import { default as updateStudent } from "./api/editMethod"
+import { default as deleteStudent } from "./api/deleteMethod"
 
 document.querySelector('#get-students-btn').addEventListener('click', () => {
     // getStudents()
@@ -130,9 +14,6 @@ document.querySelector('#get-students-btn').addEventListener('click', () => {
     }
   );
 })
-
-// 2. Реалізуйте функцію addStudent для додавання
-//  нового студента (HTTP POST /students) 
 
 document.querySelector('#add-student-form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -171,15 +52,12 @@ document.querySelector('#add-student-form').addEventListener('submit', (e) => {
 
 
 
-// 3. Реалізуйте функцію updateStudent 
-//  для часткового оновлення студента (HTTP PATCH /students/{id})
-
 let studentId = null
 
 document.querySelector('tbody').addEventListener('click', (e) => {
     if (e.target.textContent === 'Редагувати') {
         document.querySelector('.add').style.display = 'none'
-        document.querySelector('.edit').style.display = 'inline-block'
+        document.querySelector('.edit').style.display = 'inherit'
 
         const tr = e.target.closest('tr');
         studentId = tr.getAttribute('data-id');
@@ -189,36 +67,35 @@ document.querySelector('tbody').addEventListener('click', (e) => {
         document.querySelector('#course').value = tr.querySelector('.course').textContent;
         document.querySelector('#skills').value = tr.querySelector('.skills').textContent;
         document.querySelector('#email').value = tr.querySelector('.email').textContent;
-        document.querySelector('#isEnrolled').value = tr.querySelector('.isEnrolled').textContent;
+        if (tr.querySelector('.isEnrolled').textContent === 'true'){
+          document.querySelector('#isEnrolled').checked = true
+        } else {
+          document.querySelector('#isEnrolled').checked = false
+        }
 }})
 
 document.querySelector('.edit').addEventListener('click', () => {
   const updatedStudent = {
+    id: studentId,
     name: document.querySelector('#name').value,
     age: document.querySelector('#age').value,
     course: document.querySelector('#course').value,
     skills: document.querySelector('#skills').value,
     email: document.querySelector('#email').value,
-    isEnrolled: document.querySelector('#isEnrolled').value
+    isEnrolled: document.querySelector('#isEnrolled').checked
   };
   console.log(studentId)
 
-  updateStudent(studentId, updatedStudent).then(() => {
+  updateStudent(updatedStudent, studentId).then(() => {
     getStudents().then((data) => {
       document.querySelector("tbody").innerHTML = renderStudents(data);
-      document.querySelector('.add').style.display = 'inline-block';
+      document.querySelector('.add').style.display = 'inherit';
       document.querySelector('.edit').style.display = 'none';
     });
   });
 });
 
-// document.querySelector('.add').addEventListener('click', () => {
 
-// })
-
-
-// 4. Реалізуйте функцію  для deleteStudent
-//  видалення студента за його ідентифікатором (HTTP DELETE /students/{id})
 
 document.querySelector('tbody').addEventListener('click', (e) => {
     if (e.target.textContent === 'Видалити'){
@@ -232,31 +109,3 @@ document.querySelector('tbody').addEventListener('click', (e) => {
     }}
 )
 
-// 7. Написати JavaScript-код для обробки
-//  подій користувача.
-
-
-// 7.1. Додати обробники подій для кнопок,
-//  щоб вони виконували відповідні HTTP-запити.
-
-
-// 7.2. При натисканні на кнопку "Отримати студентів" 
-// (GET), виконати HTTP-запит GET /students і 
-// відобразити отримані дані в таблиці.
-
-
-// 7.3. Реалізувати форму для додавання нового студента.
-//  При натисканні на кнопку "Додати студента" (POST), 
-// зібрати дані з полів вводу, сформувати об'єкт з даними  і 
-// виконати HTTP-запит POST /students, щоб додати нового студента до бази даних.
-
-
-// 7.4. Реалізувати можливість оновлення інформації про студента. 
-// Для кожного студента в таблиці додати кнопку "Оновити".
-//  При натисканні на цю кнопку, виконати HTTP-запит PUT /students/:id, де :id — 
-// ідентифікатор фільму, і відправити оновлені дані про студента на сервер.
-
-
-// 7.5. Додати можливість видалення студента. 
-// Для кожного студента в таблиці додати кнопку "Видалити". 
-// При натисканні на цю кнопку, виконати HTTP-запит DELETE /students/:id.
