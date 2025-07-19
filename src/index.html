@@ -10,7 +10,8 @@
 
   <title>CRUD Students</title>
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="styles/modal.css">
 
 </head>
 
@@ -77,9 +78,30 @@
       <label>Записаний: <input type="checkbox" id="isEnrolled" name="isEnrolled"></label>
 
       <button class="add" type="submit">Додати студента</button>
-      <button class="edit" type="submit">Змінити студента</button>
+      <!-- <button class="edit" type="submit">Змінити студента</button> -->
 
     </form>
+
+     <div class="modal-backdrop" id="modal-backdrop"></div>
+      <div class="modal" id="editModal">
+        <div class="modal-content">
+          <h2>Змінити студента</h2>
+          <form id="editForm">
+              <input type="text" id="nameChange" placeholder="Ім'я" />
+              <input type="number" id="ageChange" placeholder="Вік" />
+              <input type="text" id="courseChange" placeholder="Курс" />
+              <input type="text" id="skillsChange" placeholder="Навички" />
+              <input type="email" id="emailChange" placeholder="Email" />
+              <input type="checkbox" id="isEnrolledChange"/>
+              <div class="modal-buttons">
+                <button type="button" class="editButt">Редагувати</button>
+                <button type="button" class="cancelButt">Закінчити операцію</button>
+              </div>
+          </form>
+
+        </div>
+      </div>
+
 
   </div>
 

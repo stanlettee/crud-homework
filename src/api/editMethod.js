@@ -1,7 +1,7 @@
 export default async function updateStudent(studentData, id) {
   try {
-    return await fetch(`http://localhost:3000/students/${id}`, {
-        method: 'PATCH',
+    return await fetch(`https://687ba9e9b4bc7cfbda86b8b5.mockapi.io/students/data/students/${id}`, {
+        method: 'PUT',
         headers: {
         'Content-Type': 'application/json'
         },

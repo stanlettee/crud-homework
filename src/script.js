@@ -53,47 +53,59 @@ document.querySelector('#add-student-form').addEventListener('submit', (e) => {
 
 
 let studentId = null
-
 document.querySelector('tbody').addEventListener('click', (e) => {
-    if (e.target.textContent === 'Редагувати') {
-        document.querySelector('.add').style.display = 'none'
-        document.querySelector('.edit').style.display = 'inherit'
+  if (e.target.textContent.trim() === 'Редагувати') {
+    const tr = e.target.closest('tr');
+    studentId = tr.getAttribute('data-id');
 
-        const tr = e.target.closest('tr');
-        studentId = tr.getAttribute('data-id');
+    document.querySelector('#nameChange').value = tr.querySelector('.name').textContent;
+    document.querySelector('#ageChange').value = tr.querySelector('.age').textContent;
+    document.querySelector('#courseChange').value = tr.querySelector('.course').textContent;
+    document.querySelector('#skillsChange').value = tr.querySelector('.skills').textContent;
+    document.querySelector('#emailChange').value = tr.querySelector('.email').textContent;
+    document.querySelector('#isEnrolledChange').checked = tr.querySelector('.isEnrolled').textContent === 'true';
 
-        document.querySelector('#name').value = tr.querySelector('.name').textContent;;
-        document.querySelector('#age').value = tr.querySelector('.age').textContent;
-        document.querySelector('#course').value = tr.querySelector('.course').textContent;
-        document.querySelector('#skills').value = tr.querySelector('.skills').textContent;
-        document.querySelector('#email').value = tr.querySelector('.email').textContent;
-        if (tr.querySelector('.isEnrolled').textContent === 'true'){
-          document.querySelector('#isEnrolled').checked = true
-        } else {
-          document.querySelector('#isEnrolled').checked = false
-        }
-}})
+    // document.querySelector('.add').style.display = 'none';
+    // document.querySelector('.editButt').style.display = 'inherit';
 
-document.querySelector('.edit').addEventListener('click', () => {
-  const updatedStudent = {
-    id: studentId,
-    name: document.querySelector('#name').value,
-    age: document.querySelector('#age').value,
-    course: document.querySelector('#course').value,
-    skills: document.querySelector('#skills').value,
-    email: document.querySelector('#email').value,
-    isEnrolled: document.querySelector('#isEnrolled').checked
-  };
-  console.log(studentId)
-
-  updateStudent(updatedStudent, studentId).then(() => {
-    getStudents().then((data) => {
-      document.querySelector("tbody").innerHTML = renderStudents(data);
-      document.querySelector('.add').style.display = 'inherit';
-      document.querySelector('.edit').style.display = 'none';
-    });
-  });
+    document.getElementById('editModal').style.display = 'block';
+    document.getElementById('modal-backdrop').style.display = 'block';
+  }
 });
+
+
+document.querySelector('.editButt').addEventListener('click', () => {
+  const updatedStudent = {
+        name: document.querySelector('#nameChange').value,
+        age: parseInt(document.querySelector('#ageChange').value),
+        course: document.querySelector('#courseChange').value,
+        skills: document.querySelector('#skillsChange').value,
+        email: document.querySelector('#emailChange').value,
+        isEnrolled: document.querySelector('#isEnrolledChange').checked
+    };
+
+    console.log(updatedStudent)
+
+  updateStudent(updatedStudent, studentId)
+    .then(() => getStudents())
+    .then((data) => {
+      document.querySelector("tbody").innerHTML = renderStudents(data);
+      document.getElementById('editModal').style.display = 'none';
+      document.getElementById('modal-backdrop').style.display = 'none';
+    })
+    .catch(error => {
+      console.error('Error updating student:', error);
+    });
+})
+
+
+document.querySelector('.cancelButt').addEventListener('click', () => {
+      document.getElementById('editModal').style.display = 'none';
+      document.getElementById('modal-backdrop').style.display = 'none';
+});
+
+
+
 
 
 
