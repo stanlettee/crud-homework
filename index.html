@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang=en><meta charset=UTF-8><meta name=viewport content="width=device-width, initial-scale=1.0"><title>CRUD Students</title><link rel=stylesheet href=/crud-homework/crud-homework.5387dc4e.css><body>
+<!DOCTYPE html><html lang=en><meta charset=UTF-8><meta name=viewport content="width=device-width, initial-scale=1.0"><title>CRUD Students</title><link rel=stylesheet href=/crud-homework/crud-homework.8f7520d0.css><link rel=stylesheet href=/crud-homework/crud-homework.37d3d77d.css><body>
 
   <div class=container>
 
@@ -61,13 +61,34 @@
       <label>Записаний: <input type=checkbox id=isEnrolled name=isEnrolled></label>
 
       <button class=add>Додати студента</button>
-      <button class=edit>Змінити студента</button>
+      
 
     </form>
 
+     <div class=modal-backdrop id=modal-backdrop></div>
+      <div class=modal id=editModal>
+        <div class=modal-content>
+          <h2>Змінити студента</h2>
+          <form id=editForm>
+              <input id=nameChange placeholder="Ім'я">
+              <input type=number id=ageChange placeholder=Вік>
+              <input id=courseChange placeholder=Курс>
+              <input id=skillsChange placeholder=Навички>
+              <input type=email id=emailChange placeholder=Email>
+              <input type=checkbox id=isEnrolledChange>
+              <div class=modal-buttons>
+                <button type=button class=editButt>Редагувати</button>
+                <button type=button class=cancelButt>Закінчити операцію</button>
+              </div>
+          </form>
+
+        </div>
+      </div>
+
+
   </div>
 
-  <script src=/crud-homework/crud-homework.b951c961.js></script>
+  <script type=module src=/crud-homework/crud-homework.2eb0a2d8.js></script>
 
 
 

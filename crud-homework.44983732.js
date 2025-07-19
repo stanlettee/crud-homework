@@ -66,7 +66,7 @@ async function addStudent(student) {
 async function updateStudent(id, studentData) {
     try {
         return await fetch(`http://localhost:3000/students${id}`, {
-            method: 'PATCH',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
